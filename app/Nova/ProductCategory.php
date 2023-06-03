@@ -25,6 +25,7 @@ class ProductCategory extends Resource
      */
     public static $title = 'name';
 
+    public static $group = 'Products';
     /**
      * The columns that should be searched.
      *
@@ -54,7 +55,7 @@ class ProductCategory extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            HasMany::make('Products'),
+            BelongsToMany::make('Products', 'products', Product::class),
         ];
     }
 

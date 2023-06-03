@@ -22,7 +22,6 @@ class Product extends Model implements HasMedia
         'description_html',
         'sequence',
         'product_sequence',
-        'product_category_id',
         'external_id',
     ];
 
@@ -31,9 +30,10 @@ class Product extends Model implements HasMedia
         'product_sequence' => 'integer',
     ];
 
-    public function productCategory(): BelongsTo
+    public function productCategories(): BelongsToMany
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class)
+            ->withTimestamps();
     }
 
     public function allergies(): BelongsToMany

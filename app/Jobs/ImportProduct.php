@@ -36,11 +36,18 @@ class ImportProduct implements ShouldQueue
             'description_html' => $this->product['Description1NL'],
             'sequence' => $this->product['Sequence'] ?? 0,
             'product_sequence' => $this->product['ProductSequence'] ?? 0,
-            'product_category_id' => \App\Models\ProductCategory::where('name', $this->product['ProductCategoryNL'])->first()->id,
         ]);
 
         $this->addImages($product, $this->product['DigitalAssets']);
         $this->addAllergies($product, $this->product['Allergies']);
+        $this->addCategories($product);
+    }
+
+    public function addCategories(Product $product): void
+    {
+        $models = \App\Models\ProductCategory::where('name', $this->product['ProductCategoryNL'])->get();
+
+        $product->productCategories()->sync($models->pluck('id'));
     }
 
     public function addAllergies(Product $product, array $allergies): void

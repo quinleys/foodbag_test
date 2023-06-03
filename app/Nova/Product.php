@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -27,6 +26,7 @@ class Product extends Resource
      */
     public static $title = 'name';
 
+    public static $group = 'Products';
     /**
      * The columns that should be searched.
      *
@@ -74,7 +74,7 @@ class Product extends Resource
                 ->default(0)
                 ->sortable(),
 
-            BelongsTo::make('Product Category', 'productCategory', ProductCategory::class),
+            BelongsToMany::make('Product Categories', 'productCategories', ProductCategory::class),
 
             BelongsToMany::make('Allergies', 'allergies', Allergy::class),
         ];
