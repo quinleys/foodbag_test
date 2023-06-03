@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Str;
 
 class ImportProductCategory implements ShouldQueue
 {
@@ -29,6 +30,7 @@ class ImportProductCategory implements ShouldQueue
     {
         ProductCategory::updateOrCreate([
             'name' => $this->productCategoryName,
+            'slug' => Str::of($this->productCategoryName)->slug(),
         ]);
     }
 }

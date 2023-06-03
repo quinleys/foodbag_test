@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Str;
 
 class ImportAllergy implements ShouldQueue
 {
@@ -28,6 +29,7 @@ class ImportAllergy implements ShouldQueue
         foreach ($this->allergies as $allergy) {
             \App\Models\Allergy::UpdateOrCreate([
                 'name' => $allergy['NameNL'],
+                'slug' => Str::of($allergy['NameNL'])->slug(),
             ]);
         }
     }
