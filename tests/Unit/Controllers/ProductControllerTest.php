@@ -20,3 +20,21 @@ it('can return product show route', function () {
         ])
         ->assertStatus(200);
 });
+
+it('can filter on name', function () {
+    $wrongProduct = \App\Models\Product::factory([
+        'name' => 'wrong',
+    ])->create();
+
+    $this->get('/api/v1/products?search=' . $this->product->name,
+        [
+            'api-token' => $this->token->token,
+        ])
+        ->assertStatus(200)
+        ->assertJsonFragment([
+            'name' => $this->product->name,
+        ])
+        ->assertJsonMissing([
+            'name' => $wrongProduct->name,
+        ]);
+});

@@ -21,6 +21,7 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
 
     Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
         Route::get('/products', 'index');
+        Route::get('/products/filters', 'filters');
         Route::get('/products/{product:external_id}', 'show');
     });
 
