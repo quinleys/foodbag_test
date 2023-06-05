@@ -182,7 +182,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default'],
+            'queue' => ['default', 'imports'],
             'balance' => 'auto',
             'autoScalingStrategy' => 'time',
             'maxProcesses' => 1,
@@ -207,6 +207,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 3,
+                'queue' => ['default', 'imports']
             ],
         ],
     ],

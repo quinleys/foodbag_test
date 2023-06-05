@@ -2,22 +2,23 @@
 
 namespace App\Jobs;
 
+use App\Mail\ImportSuccessfull;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
-class ImportAllergy implements ShouldQueue
+class SendSyncSuccessMail implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public array $allergies)
+    public function __construct()
     {
         $this->onQueue('imports');
     }
@@ -27,11 +28,7 @@ class ImportAllergy implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach ($this->allergies as $allergy) {
-            \App\Models\Allergy::UpdateOrCreate([
-                'name' => Str::of($allergy['NameNL'])->ucfirst()->value(),
-                'slug' => Str::of($allergy['NameNL'])->slug()->value(),
-            ]);
-        }
+        Mail::to('quintenleysen@hotmail.com')
+            ->send(new ImportSuccessfull());
     }
 }

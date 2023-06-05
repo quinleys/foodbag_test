@@ -21,7 +21,7 @@ class ImportProduct implements ShouldQueue
      */
     public function __construct(public array $product)
     {
-        //
+        $this->onQueue('imports');
     }
 
     /**
@@ -30,8 +30,8 @@ class ImportProduct implements ShouldQueue
     public function handle(): void
     {
         $product = \App\Models\Product::updateOrCreate([
-            'name' => $this->product['NameNL'],
-            'slug' => Str::of($this->product['NameNL'])->slug(),
+            'name' => Str::of($this->product['NameNL'])->ucfirst()->value(),
+            'slug' => Str::of($this->product['NameNL'])->slug()->value(),
         ], [
             'subtitle' => $this->product['SubtitleNL'],
             'description' => $this->product['ProductDescription1NL'],

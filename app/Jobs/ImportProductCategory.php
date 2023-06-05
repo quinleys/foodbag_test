@@ -14,13 +14,12 @@ use Illuminate\Support\Str;
 class ImportProductCategory implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * Create a new job instance.
      */
     public function __construct(public string $productCategoryName)
     {
-        //
+        $this->onQueue('imports');
     }
 
     /**
@@ -29,8 +28,8 @@ class ImportProductCategory implements ShouldQueue
     public function handle(): void
     {
         ProductCategory::updateOrCreate([
-            'name' => $this->productCategoryName,
-            'slug' => Str::of($this->productCategoryName)->slug(),
+            'name' => Str::of($this->productCategoryName)->ucfirst()->value(),
+            'slug' => Str::of($this->productCategoryName)->slug()->value(),
         ]);
     }
 }

@@ -23,7 +23,6 @@ class ProductFactory extends Factory
             'description_html' => $this->faker->paragraph,
             'sequence' => $this->faker->randomNumber(),
             'product_sequence' => $this->faker->randomNumber(),
-            'product_category_id' => \App\Models\ProductCategory::factory()->create()->id,
         ];
     }
 }

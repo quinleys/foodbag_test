@@ -19,7 +19,7 @@ class HandleImportProducts implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        $this->onQueue('imports');
     }
 
     /**
@@ -28,13 +28,14 @@ class HandleImportProducts implements ShouldQueue
     public function handle(): void
     {
         Bus::batch($this->generateJobsChain())
+            ->then(function (Batch $batch) {
+                // All jobs completed successfully...
+                // notify user of success
+                SendSyncSuccessMail::dispatch();
+            })
             ->catch(function (Batch $batch) {
                 // All jobs that have run are finished
                 // notify user something when wrong
-                //            $batch->add(new SendSyncSuccessMail($order));
-            })
-            ->then(function (Batch $batch) {
-//            $batch->add(new SendSyncSuccessMail($order));
             })
             ->name('Import products')
             ->dispatch();
@@ -47,6 +48,7 @@ class HandleImportProducts implements ShouldQueue
 
         $jobs = [];
 
+        // Loop over the products and create a chain of jobs
         foreach ($products['ExtraProductVariants'] as $product) {
             $jobs[] = [
                 new ImportAllergy($product['Allergies']),
