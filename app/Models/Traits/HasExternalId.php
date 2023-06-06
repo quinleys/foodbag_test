@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Models\Traits;
+
 use Illuminate\Support\Str;
 
-trait HasExternalId {
+trait HasExternalId
+{
     public static function bootHasExternalId(): void
     {
         static::creating(function ($model) {

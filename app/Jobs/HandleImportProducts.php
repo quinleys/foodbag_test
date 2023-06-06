@@ -53,7 +53,7 @@ class HandleImportProducts implements ShouldQueue
             $jobs[] = [
                 new ImportAllergy($product['Allergies']),
                 new ImportProductCategory($product['ProductCategoryNL']),
-                new ImportProduct($product)
+                new ImportProduct($product),
             ];
         }
 

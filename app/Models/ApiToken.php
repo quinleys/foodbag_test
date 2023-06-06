@@ -20,15 +20,15 @@ class ApiToken extends Model
         'active' => 'boolean',
     ];
 
+    public function scopeIsActive($query)
+    {
+        return $query->where('active', true);
+    }
+
     protected static function booted(): void
     {
         static::creating(function ($apiToken) {
             $apiToken->token = (string) Str::uuid();
         });
-    }
-
-    public function scopeIsActive($query)
-    {
-        return $query->where('active', true);
     }
 }
