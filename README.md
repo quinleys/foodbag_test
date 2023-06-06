@@ -2,7 +2,7 @@
 
 ### by Quinten Leysen
 
-## Introduction
+## Opdracht
 
 - Laad de aangeleverde data vanuit de JSON in een database en gebruik deze om de producten in te laden op de front-end.
 - Voorzie hierbij dat een product in de toekomst ook aan meerdere categorieën kan worden gekoppeld.
