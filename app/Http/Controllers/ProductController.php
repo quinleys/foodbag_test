@@ -16,6 +16,14 @@ class ProductController extends Controller
 {
     public function index(Request $request): ProductCollection
     {
+        $request->validate([
+            'search' => 'nullable|string',
+            'categories' => 'nullable|string',
+            'allergies' => 'nullable|string',
+            'per_page' => 'nullable|integer',
+            'page' => 'nullable|integer'
+        ]);
+
         return new ProductCollection(
             Product::with(['productCategories', 'allergies', 'media'])
                 ->when($request->has('search'),
@@ -32,6 +40,10 @@ class ProductController extends Controller
 
     public function autoComplete(Request $request): JsonResponse
     {
+        $request->validate([
+            'search' => 'nullable|string',
+        ]);
+
         $products = Product::where('name', 'like', "%{$request->get('search')}%")
             ->orderBy('name')
             ->limit(5)

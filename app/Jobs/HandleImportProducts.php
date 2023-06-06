@@ -34,7 +34,7 @@ class HandleImportProducts implements ShouldQueue
                 SendSyncSuccessMail::dispatch();
             })
             ->catch(function (Batch $batch) {
-                // All jobs that have run are finished
+                // First batch job failure detected...
                 // notify user something when wrong
             })
             ->name('Import products')
